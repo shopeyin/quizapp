@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Home</h1>
+
+<h2>Welcome to The Quiz App</h2>
+
+
+<a class="nav-link" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a>
+<a class="nav-link" href="{% url 'teacher:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Teacher</a>
+
+{% endblock %}
