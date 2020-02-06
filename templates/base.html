@@ -8,9 +8,19 @@
     <title>Quiz</title>
 </head>
 <body>
+    {% if request.user.is_authenticated %}
     {{ request.user.username }}
     <a  class="p-2 text-dark" href="{% url 'logout' %}">Logout</a>
+    <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
+            {% if request.user.is_teacher %}
+                <a class="p-2 text-dark" href="{% url 'teacher:profile' %}">Profile Teacher</a>
+            {% else %}
+                 <a class="p-2 text-dark" href="{% url 'student:profile' %}">Profile Student</a>
+            {% endif %} 
+    {% else %}  
     <a  class="p-2 text-dark" href="{% url 'login' %}">Login</a>
+    <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
+    {% endif %} 
     {% block content %}
 
     {% endblock %}

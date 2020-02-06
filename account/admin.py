@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import  UserAdmin,GroupAdmin 
 from django.contrib.auth.models import Group
-from .models import MyUser,Student,Subject
+from django.db import transaction
+from .models import MyUser,Student,Subject,Quiz,Teacher
 
 
 
@@ -18,6 +19,8 @@ class CustomUserAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'is_active', 'groups')
     search_fields = ('username', 'email')
     ordering = ('username',)
+
+
 
 
 class CustomGroupAdmin(GroupAdmin):
@@ -38,5 +41,7 @@ class CustomGroupAdmin(GroupAdmin):
 admin.site.register(MyUser,CustomUserAdmin)
 admin.site.register(Student)
 admin.site.register(Subject)
+admin.site.register(Teacher)
+admin.site.register(Quiz)
 admin.site.unregister(Group)
 # Register your models here.

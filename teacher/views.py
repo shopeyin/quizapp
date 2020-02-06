@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate,logout
-from account.models import MyUser,Student,Subject
-from .forms import TeacherSignUpForm
+from account.models import MyUser,Student,Subject,Teacher
+from .forms import TeacherSignUpForm,SubjectForm
 
 
 def teacher_register(request):
@@ -20,6 +20,41 @@ def teacher_register(request):
 
 
 
+# def teacher_profile(request):
+#     context={}
+#     if request.method == 'POST':
+#         subject = Subject(teacher=request.user)
+#         print(subject)
+#         form = SubjectForm(request.POST,instance=subject)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('teacher:profile')
+#     else:
+#         form = SubjectForm()
+#     context={'form':form}
+#     subject_taught = Subject.objects.filter(teacher__user=request.user)
+#     context['subject_taught'] = subject_taught
+#     return render(request, 'teacher/teacher_profile.html',context) 
+
+
+
+
 def teacher_profile(request):
     context={}
+    if request.method == 'POST':
+        user=Teacher.objects.get(user=request.user)
+        subject = Subject(teacher=user)
+        form = SubjectForm(request.POST, instance=subject)
+        form.save()
+        return redirect('teacher:profile')
+    else:
+        form = SubjectForm()
+    context={'form':form}
+    subject_taught = Subject.objects.filter(teacher__user=request.user)
+    context['subject_taught'] = subject_taught
     return render(request, 'teacher/teacher_profile.html',context) 
+
+
+
+    
+    

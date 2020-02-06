@@ -1,6 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Teacher Profile</h1>
-{{ request.user.username }} Teacher profile page
+<h1>Teacher Dashboard</h1>
+{{ request.user.username }} 
+<h3>Teacher profile page</h3> 
+<h4>Name of the lecturer: {{ request.user.username }}</h4>
+<h5>Subjects Teaching :</h5>
+    {% for subjects_teaching in subject_taught %}
+        <p>{{ subjects_teaching }}, </p>
+    {% endfor %}
+
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ form }}
+    
+        <button class="submit-button btn btn-lg btn-primary " type="submit">Add subject</button>
+        <input type="hidden" name="next" value="{{ next }}">
+    </form>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager , GroupManager,PermissionManager
 from django.contrib.auth.models import Group
 from django.conf import settings
+from django.db import transaction
 from django.contrib.contenttypes.models import ContentType
 # Create your models here.
 
@@ -63,19 +64,55 @@ class MyUser(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
-class Subject(models.Model):
-    subject                = models.CharField(max_length=30)
+
+
+
+
+# class Subject(models.Model):
+#     subject                = models.CharField(max_length=30)
+
+#     def __str__(self):
+#         return self.subject
+
+
+# class Student(models.Model):
+#     user                 =   models.OneToOneField(MyUser,on_delete=models.CASCADE,primary_key=True) 
+#     interests            =   models.ManyToManyField(Subject, related_name='interested_students')      
+
+#     def __str__(self):
+#         return str(self.user) 
+
+   
+class Teacher(models.Model):
+    user                 =   models.OneToOneField(MyUser,on_delete=models.CASCADE,primary_key=True) 
 
     def __str__(self):
-        return self.subject
+        return self.user.username
+
+
+
+class Subject(models.Model): 
+    name                = models.CharField(max_length=30,unique=True)
+    teacher             = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name 
 
 
 class Student(models.Model):
     user                 =   models.OneToOneField(MyUser,on_delete=models.CASCADE,primary_key=True) 
-    interests            =   models.ManyToManyField(Subject, related_name='interested_students')      
+    subject             =    models.ManyToManyField(Subject)
 
     def __str__(self):
-        return self.user 
+        return self.user.username
+
+
+class Quiz(models.Model):
+    name                = models.CharField(max_length=30,unique=True)
+    teacher             = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name
 
 
 

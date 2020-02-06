@@ -8,7 +8,7 @@ from account.models import MyUser,Subject,Student
 
 
 class StudentSignUpForm(UserCreationForm):
-    interests = forms.ModelMultipleChoiceField(
+    subject = forms.ModelMultipleChoiceField(
         queryset=Subject.objects.all(),
         widget=forms.CheckboxSelectMultiple,
         required=True
@@ -24,5 +24,5 @@ class StudentSignUpForm(UserCreationForm):
         user.is_student = True
         user.save()
         student = Student.objects.create(user=user)
-        student.interests.add(*self.cleaned_data.get('interests'))
+        student.subject.add(*self.cleaned_data.get('subject'))
         return user

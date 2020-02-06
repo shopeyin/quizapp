@@ -5,8 +5,16 @@
 
 <h2>Welcome to The Quiz App</h2>
 
+{% if request.user.is_authenticated %}
+        {% if request.user.is_teacher %}
+            <h3>Post your  questions</h3>
+        {% else %} 
+            <h3>Answer your  questions</h3>
+        {% endif %}
+{% else %}  
+    <a class="nav-link" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a>
+    <a class="nav-link" href="{% url 'teacher:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Teacher</a>
+{% endif %}
 
-<a class="nav-link" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a>
-<a class="nav-link" href="{% url 'teacher:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Teacher</a>
 
 {% endblock %}
