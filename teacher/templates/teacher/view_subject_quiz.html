@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ single_quiz }} quiz</h1>
+<h4>Add more {{ single_subject }} quiz</h4>
+{% for quizzes in quiz %}
+   <p>{{ quizzes }}</p> 
+{% endfor %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    
+
+    <button class="submit-button btn btn-lg btn-primary " type="submit">Add quiz</button>
+    <input type="hidden" name="next" value="{{ next }}">
+</form>
+
+
+{% endblock %} 

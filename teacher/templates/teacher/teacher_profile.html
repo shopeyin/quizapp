@@ -7,10 +7,12 @@
 <h4>Name of the lecturer: {{ request.user.username }}</h4>
 <h5>Subjects Teaching :</h5>
     {% for subjects_teaching in subject_taught %}
-        <p>{{ subjects_teaching }}, </p>
+        <p>{{ subjects_teaching }}, <a  class="btn btn-outline-primary" href="{{ subjects_teaching.get_absolute_url }}">View quiz</a>  </p>
+       
+        
     {% endfor %}
 
-
+ 
     <form method="POST">
         {% csrf_token %}
         {{ form }}

@@ -1,37 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import login, authenticate,logout
-from account.models import MyUser,Student,Subject
+from account.models import MyUser,Student,Subject,Quiz
 from . forms import StudentSignUpForm
 from django.views.generic import CreateView
-
-
-
-# class StudentSignUpView(CreateView):
-#     model = MyUser
-#     form_class = StudentSignUpForm
-#     template_name =  'student/student_register.html'
-
-
-#     def get_context_data(self, **kwargs):
-#         kwargs['user_type'] = 'student'
-#         return super().get_context_data(**kwargs)
-
-#     def form_valid(self, form):
-#         user = form.save()
-#         login(self.request, user)
-#         return redirect('home')
-# Create your views here.
-
-
-# def student_register(request):
-#     context = {}
-#     if request.method == "POST":
-#         form=StudentSignUpForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('home')
-    
-#     return render(request, 'student/student_register.html',context) 
 
 
 def student_register(request):
@@ -52,4 +23,19 @@ def student_register(request):
 
 def student_profile(request):
     context={}
+    student = Student.objects.filter(user=request.user).first() 
+    student_subjects = student.subject.all()  
+    context['student_subjects'] = student_subjects
     return render(request, 'student/student_profile.html',context) 
+
+
+
+def view_student_subject_quiz(request,slug):
+    context ={}
+    single_subject = get_object_or_404(Subject,slug=slug)
+    print(single_subject)
+    quiz = Quiz.objects.filter(subject__name=single_subject)
+    context['single_subject'] = single_subject
+
+    context['quiz'] = quiz
+    return render(request, 'student/view_student_subject_quiz.html',context) 

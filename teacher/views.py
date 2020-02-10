@@ -1,7 +1,8 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import login, authenticate,logout
-from account.models import MyUser,Student,Subject,Teacher
-from .forms import TeacherSignUpForm,SubjectForm
+from django.http import HttpResponse
+from account.models import MyUser,Student,Subject,Teacher,Quiz
+from .forms import TeacherSignUpForm,AddquizForm,SubjectForm
 
 
 def teacher_register(request):
@@ -20,41 +21,57 @@ def teacher_register(request):
 
 
 
-# def teacher_profile(request):
-#     context={}
-#     if request.method == 'POST':
-#         subject = Subject(teacher=request.user)
-#         print(subject)
-#         form = SubjectForm(request.POST,instance=subject)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('teacher:profile')
-#     else:
-#         form = SubjectForm()
-#     context={'form':form}
-#     subject_taught = Subject.objects.filter(teacher__user=request.user)
-#     context['subject_taught'] = subject_taught
-#     return render(request, 'teacher/teacher_profile.html',context) 
-
 
 
 
 def teacher_profile(request):
     context={}
-    if request.method == 'POST':
-        user=Teacher.objects.get(user=request.user)
-        subject = Subject(teacher=user)
-        form = SubjectForm(request.POST, instance=subject)
-        form.save()
-        return redirect('teacher:profile')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            user=Teacher.objects.get(user=request.user)
+            subject = Subject(teacher=user)
+            form = SubjectForm(request.POST, instance=subject)
+            if form.is_valid():
+                form.save()
+                return redirect('teacher:profile')
+        else:
+            form = SubjectForm()
+        context={'form':form}
+        subject_taught = Subject.objects.filter(teacher__user=request.user)
+        context['subject_taught'] = subject_taught
     else:
-        form = SubjectForm()
-    context={'form':form}
-    subject_taught = Subject.objects.filter(teacher__user=request.user)
-    context['subject_taught'] = subject_taught
+        return redirect('login')
     return render(request, 'teacher/teacher_profile.html',context) 
 
 
 
+def view_subject_quiz(request,slug):
+    context ={}
+    user = request.user
+    if request.user.is_authenticated:
+        single_subject = get_object_or_404(Subject,slug=slug)
+
+        if single_subject.teacher.user != user:
+            return HttpResponse('You are not the owner of this subject or quiz ')
+
+        context['single_subject'] = single_subject
+
+        quiz = Quiz.objects.filter(subject__name=single_subject)
+       
+        if request.method =='POST':
+            create_quiz=Quiz(subject=single_subject)
+            form=AddquizForm(request.POST,instance=create_quiz)
+            if form.is_valid():
+                form.save()
+                return redirect('view_quiz',slug=slug)
+        else:
+            form = AddquizForm()
+        context={'form':form}
+
+        
+        context['quiz'] = quiz
+    else:
+        return redirect('login')
+    return render(request, 'teacher/view_subject_quiz.html',context) 
     
     

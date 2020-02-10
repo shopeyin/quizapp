@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path,include
 from home.views import home_view,logout_view
 from account.views import login_view
+from teacher.views import view_subject_quiz
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home_view, name='home'),
@@ -24,4 +25,5 @@ urlpatterns = [
     path('teacher/', include('teacher.urls')),
     path('login/', login_view, name="login"),
     path('logout/', logout_view, name="logout"),
+    path('view_quiz/<slug>/',view_subject_quiz,name='view_quiz')
 ]

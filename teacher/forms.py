@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from account.models import MyUser, Teacher,Subject
+from account.models import MyUser, Teacher,Subject,Quiz
 
 
 
@@ -26,8 +26,17 @@ class SubjectForm(forms.ModelForm):
     class Meta:
         model = Subject
         fields = '__all__'
-        exclude = ['teacher']
+        exclude = ['teacher','slug']
 
+
+
+
+class AddquizForm(forms.ModelForm):
+
+    class Meta:
+        model = Quiz
+        fields = '__all__'
+        exclude = ['subject','slug']
 
 
     

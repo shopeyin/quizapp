@@ -1,6 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import PermissionsMixin, AbstractBaseUser, BaseUserManager , GroupManager,PermissionManager
 from django.contrib.auth.models import Group
+from django.utils.text import slugify
+from .utils import unique_slug_generator
+from django.urls import reverse
+from django.db.models.signals import post_delete,pre_save
+from django.dispatch import receiver
 from django.conf import settings
 from django.db import transaction
 from django.contrib.contenttypes.models import ContentType
@@ -67,21 +72,6 @@ class MyUser(AbstractBaseUser,PermissionsMixin):
 
 
 
-
-# class Subject(models.Model):
-#     subject                = models.CharField(max_length=30)
-
-#     def __str__(self):
-#         return self.subject
-
-
-# class Student(models.Model):
-#     user                 =   models.OneToOneField(MyUser,on_delete=models.CASCADE,primary_key=True) 
-#     interests            =   models.ManyToManyField(Subject, related_name='interested_students')      
-
-#     def __str__(self):
-#         return str(self.user) 
-
    
 class Teacher(models.Model):
     user                 =   models.OneToOneField(MyUser,on_delete=models.CASCADE,primary_key=True) 
@@ -94,9 +84,21 @@ class Teacher(models.Model):
 class Subject(models.Model): 
     name                = models.CharField(max_length=30,unique=True)
     teacher             = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    slug 				= models.SlugField(blank=True, unique=True)
     
     def __str__(self):
         return self.name 
+
+    def get_absolute_url(self):
+       return reverse('view_quiz', args=[str(self.slug)])
+
+
+def pre_save_subject_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance, instance.name,instance.slug)
+pre_save.connect(pre_save_subject_receiver, sender=Subject)
+
+
 
 
 class Student(models.Model):
@@ -107,12 +109,24 @@ class Student(models.Model):
         return self.user.username
 
 
+
+
 class Quiz(models.Model):
-    name                = models.CharField(max_length=30,unique=True)
-    teacher             = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    question            = models.CharField(max_length=100,unique=True)
+    subject             = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    slug 				= models.SlugField(blank=True, unique=True)
     
     def __str__(self):
-        return self.name
+        return self.question
+
+
+  
+
+def pre_save_quiz_receiver(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = unique_slug_generator(instance, instance.subject,instance.slug)
+pre_save.connect(pre_save_quiz_receiver, sender=Quiz)
+
 
 
 

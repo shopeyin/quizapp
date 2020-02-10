@@ -3,4 +3,10 @@
 {% block content %}
 <h1>Student Profile</h1>
 {{ request.user.username }} Student profile page
+
+
+<h3>Subjects taken by student</h3>
+{% for student_subject in student_subjects%}
+<p>{{  student_subject }}  <a  class="btn btn-outline-primary" href="{% url 'student:view_quiz' student_subject.slug %}">View quiz</a> </p>
+{% endfor %}
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Name of subject: {{ single_subject }}</h2>
+{% for quizzes in quiz %}
+   <p>{{ quizzes }}<a  class="btn btn-outline-primary" href="#">Answer quiz</a></p> 
+{% endfor %}
+
+
+{% endblock %} 
