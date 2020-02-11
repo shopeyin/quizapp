@@ -26,3 +26,12 @@ class StudentSignUpForm(UserCreationForm):
         student = Student.objects.create(user=user)
         student.subject.add(*self.cleaned_data.get('subject'))
         return user
+
+
+
+
+class AnswerForm(forms.Form):
+    answer            = forms.CharField(required=True,max_length=100)
+
+
+     

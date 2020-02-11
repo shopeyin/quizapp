@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import login, authenticate,logout
 from account.models import MyUser,Student,Subject,Quiz
-from . forms import StudentSignUpForm
+from . forms import StudentSignUpForm,AnswerForm
 from django.views.generic import CreateView
 
 
@@ -39,3 +39,22 @@ def view_student_subject_quiz(request,slug):
 
     context['quiz'] = quiz
     return render(request, 'student/view_student_subject_quiz.html',context) 
+
+
+def answer_quiz(request,slug):
+    context = {}
+    quiz = get_object_or_404(Quiz,slug=slug)
+    convert_quiz= str(quiz.answer.lower()) 
+    if request.method == 'POST':
+        form=AnswerForm(request.POST)
+        if form.is_valid():
+            answer =  form.cleaned_data.get('answer')
+            if answer.lower() == convert_quiz:
+                print('correct')
+            else:
+                print('incorrect')
+    else:
+        form = AnswerForm()
+    context['form']=form
+    context['quiz'] = quiz
+    return render(request, 'student/answer_quiz.html',context) 

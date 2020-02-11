@@ -113,6 +113,7 @@ class Student(models.Model):
 
 class Quiz(models.Model):
     question            = models.CharField(max_length=100,unique=True)
+    answer              = models.CharField(max_length=100,unique=False)
     subject             = models.ForeignKey(Subject, on_delete=models.CASCADE)
     slug 				= models.SlugField(blank=True, unique=True)
     
