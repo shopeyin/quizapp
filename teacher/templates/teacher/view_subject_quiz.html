@@ -1,19 +1,37 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    
 
-    <button class="submit-button btn btn-lg btn-primary " type="submit">Add quiz</button>
-    <input type="hidden" name="next" value="{{ next }}">
-</form>
-<h1>{{ single_quiz }} quiz</h1>
-<h4>Add more {{ single_subject }} quiz</h4>
-{% for quizzes in quiz %}
-   <p>{{ quizzes }} </p> <p>Answer:{{ quizzes.answer }}</p>
-{% endfor %}
+<div class="container">
+    
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                
+            
+                <button class="submit-button btn btn-lg btn-primary " type="submit">Add quiz</button>
+                <input type="hidden" name="next" value="{{ next }}">
+            </form>
+        </div>
+    </div>
+    <h3><h4>Add more {{ single_subject }} quiz</h4></h3>
+    {% for quizzes in quiz %}
+    <div class="row">
+        <div class="col-md-6">
+            <p>Question: {{ quizzes }} </p> <p>Answer: {{ quizzes.answer }}</p>
+        </div>
+        <div class="col-md-6">
+            <a  class="btn btn-outline-danger" href="{% url 'teacher:delete' quizzes.slug %}">delete quiz</a>
+            
+        </div>
+    </div>
+    <h3>--------------------------------------------------------------</h3>
+    {% endfor %}
+</div>
+
+
 
 
 

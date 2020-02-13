@@ -2,9 +2,16 @@
 
 {% block content %}
 <h1>Teacher Dashboard</h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {{ request.user.username }} 
 <h3>Teacher profile page</h3> 
-<h4>Name of the lecturer: {{ request.user.username }}</h4>
+<h4>Name of the teacher: {{ request.user.username }}</h4>
 <h5>Subjects Teaching :</h5>
     {% for subjects_teaching in subject_taught %}
         <p>{{ subjects_teaching }}, <a  class="btn btn-outline-primary" href="{{ subjects_teaching.get_absolute_url }}">View quiz</a>  </p>

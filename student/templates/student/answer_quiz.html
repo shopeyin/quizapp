@@ -3,6 +3,18 @@
 {% block content %}
 <h1>Answer Quiz</h1>
 
+{% for student_subject in student_subjects%}
+<p> <a  class="btn btn-outline-primary" href="{% url 'student:view_quiz' student_subject.slug %}">Back to quiz</a> </p>
+{% endfor %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
 {{ quiz }}
 <form method="POST">
     

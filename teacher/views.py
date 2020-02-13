@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth import login, authenticate,logout
 from django.http import HttpResponse
+from django.contrib import messages
 from account.models import MyUser,Student,Subject,Teacher,Quiz
 from .forms import TeacherSignUpForm,AddquizForm,SubjectForm
 
@@ -55,6 +56,7 @@ def view_subject_quiz(request,slug):
             return HttpResponse('You are not the owner of this subject or quiz ')
 
         context['single_subject'] = single_subject
+        print(single_subject)
 
         quiz = Quiz.objects.filter(subject__name=single_subject)
        
@@ -63,15 +65,30 @@ def view_subject_quiz(request,slug):
             form=AddquizForm(request.POST,instance=create_quiz)
             if form.is_valid():
                 form.save()
-                return redirect('view_quiz',slug=slug)
+                return redirect('teacher:view_quiz',slug=slug)
         else:
             form = AddquizForm()
-        context={'form':form}
+        context={'form':form} 
 
         
         context['quiz'] = quiz
     else:
         return redirect('login')
+    single_subject = get_object_or_404(Subject,slug=slug)
+    context['single_subject'] = single_subject
     return render(request, 'teacher/view_subject_quiz.html',context) 
+
+
+
+
+def delete_quiz_view(request,slug):
+    quiz = get_object_or_404(Quiz,slug=slug)
+    quiz.delete()
+    messages.success(request,f"{quiz} successfully deleted")
+    # return redirect('teacher:view_quiz',slug=slug) 
+    return redirect('teacher:profile') 
+
+
+
     
     

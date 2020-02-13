@@ -90,7 +90,7 @@ class Subject(models.Model):
         return self.name 
 
     def get_absolute_url(self):
-       return reverse('view_quiz', args=[str(self.slug)])
+       return reverse('teacher:view_quiz', args=[str(self.slug)])
 
 
 def pre_save_subject_receiver(sender, instance, *args, **kwargs):

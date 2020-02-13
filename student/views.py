@@ -1,4 +1,5 @@
 from django.shortcuts import render,redirect,get_object_or_404
+from django.contrib import messages
 from django.contrib.auth import login, authenticate,logout
 from account.models import MyUser,Student,Subject,Quiz
 from . forms import StudentSignUpForm,AnswerForm
@@ -43,6 +44,8 @@ def view_student_subject_quiz(request,slug):
 
 def answer_quiz(request,slug):
     context = {}
+    student = Student.objects.filter(user=request.user).first() 
+    student_subjects = student.subject.all()  
     quiz = get_object_or_404(Quiz,slug=slug)
     convert_quiz= str(quiz.answer.lower()) 
     if request.method == 'POST':
@@ -50,11 +53,12 @@ def answer_quiz(request,slug):
         if form.is_valid():
             answer =  form.cleaned_data.get('answer')
             if answer.lower() == convert_quiz:
-                print('correct')
+                messages.success(request, 'You are correct!')
             else:
-                print('incorrect')
+                messages.warning(request, 'You are wrong,try again!')
     else:
         form = AnswerForm()
     context['form']=form
     context['quiz'] = quiz
+    context['student_subjects'] = student_subjects
     return render(request, 'student/answer_quiz.html',context) 
