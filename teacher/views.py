@@ -82,12 +82,16 @@ def view_subject_quiz(request,slug):
 
 
 def delete_quiz_view(request,slug):
+    context = {}
     quiz = get_object_or_404(Quiz,slug=slug)
-    quiz.delete()
-    messages.success(request,f"{quiz} successfully deleted")
-    # return redirect('teacher:view_quiz',slug=slug) 
-    return redirect('teacher:profile') 
+    if request.method == 'POST':
+        quiz.delete()
+        messages.success(request,f"{quiz} successfully deleted")
+        return redirect('teacher:view_quiz',slug=slug)
+    context['quiz'] = quiz
+    return render(request, 'teacher/delete_quiz.html',context) 
 
+    
 
 
     
