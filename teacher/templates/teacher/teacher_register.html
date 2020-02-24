@@ -1,12 +1,51 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Teacher</h1>
-<form method="POST">
-    
-    {% csrf_token %}
+<div class="container-fluid" >
+    <div class="row" style="min-height: 500px;display: flex; align-items: center;justify-content: center;background-color: #7FDBFF;">
+        
+        <div class="col-md-3">
+            <form class="form-signin" method="POST",style="background-color: rgba(0,0,0, 0.6);color: white;padding: 10px;border-radius: 10px">
+                <h3>Register as a teacher</h3>
+                {% csrf_token %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                        <p class="p-3 mb-2 bg-danger text-white"> {{ error }}</p>
+                        {% endfor %}
+                    {% endfor %}
+            
+                    {% if form.non_field_errors %}
+                    <div>
+                        <p class="p-3 mb-2 bg-danger text-white">{{ form.non_field_errors }}</p>
+                    </div>
+                    {% endif %}
+                <div class="form-label-group">
+                    <label for="inputEmail">Email address</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                </div>
+            
+                <div class="form-label-group">
+                    <label for="inputEmail">Username</label>
+                        <input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                </div>
+            
+            
+                <div class="form-label-group pass">
+                    <label for="inputEmail">Password</label>
+                        <input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
+                </div>
+            
+                <div class="form-label-group pass" >
+                    <label for="inputEmail">Confirm Password</label>
+                        <input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm Password" required>
+                </div>                    
+         
+                <button style="margin-top: 20px;" class="btn btn-lg btn-info btn-block" type="submit">Submit</button>
+           
+            </form>  
+        </div>
+    </div>
+</div>
 
-    {{ form.as_p }}
-    <button class="btn btn-lg btn-primary" type="submit">Register</button>
-</form>
+  
 {% endblock %}

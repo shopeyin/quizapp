@@ -7,6 +7,7 @@ from django.views.generic import CreateView
 
 
 def student_register(request):
+    context = {}
     if request.method == 'POST':
         form=StudentSignUpForm(request.POST)
         if form.is_valid():
@@ -18,7 +19,8 @@ def student_register(request):
             return redirect('student:profile')
     else:
         form = StudentSignUpForm()
-    return render(request, 'student/student_register.html',{'form': form}) 
+    context['form']=form
+    return render(request, 'student/student_register.html',context) 
 
 
 

@@ -6,6 +6,11 @@ from . forms import AccountAuthenticateForm
 
 
 def login_view(request):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        return redirect('home')
+
     if request.POST:
         form = AccountAuthenticateForm(request.POST)
         if form.is_valid():
@@ -23,5 +28,7 @@ def login_view(request):
                 return redirect('home')
     else:
         form = AccountAuthenticateForm()
-    return render(request, 'account/login.html',{'form': form}) 
+
+    context['form'] = form    
+    return render(request, 'account/login.html',context) 
 

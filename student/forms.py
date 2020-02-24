@@ -11,12 +11,18 @@ class StudentSignUpForm(UserCreationForm):
     subject = forms.ModelMultipleChoiceField(
         queryset=Subject.objects.all(),
         widget=forms.CheckboxSelectMultiple,
-        required=True
+        required=True,
+    
     )
 
     class Meta(UserCreationForm.Meta):
         model = MyUser
         fields =  ['email', 'username','password1', 'password2']
+        
+    def __init__(self, *args, **kwargs):
+        super(StudentSignUpForm,self).__init__(*args, **kwargs)
+        self.fields['password1'].help_text=''
+        self.fields['password2'].help_text=''
 
     @transaction.atomic
     def save(self):

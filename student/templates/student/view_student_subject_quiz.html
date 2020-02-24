@@ -1,10 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Name of subject: {{ single_subject }}</h2>
-{% for quizzes in quiz %}
-   <p>{{ quizzes }} <a  style="margin-left: auto;" class="btn btn-outline-primary" href="{% url 'student:answer_quiz' quizzes.slug %}">Answer quiz</a></p> 
-{% endfor %}
-
-
+<div class="container">
+      <div class="row">
+          <div class="col-md-4">
+            <h2>Name of subject: {{ single_subject }}</h2>
+            {% for quizzes in quiz %}
+               <p>{{ quizzes }}</p> <p><a  style="margin-left: auto;" class="btn btn-outline-primary" href="{% url 'student:answer_quiz' quizzes.slug %}">Answer quiz</a> </p> 
+            {% endfor %}
+            
+            
+          </div>
+        
+      </div>
+</div>
+ 
 {% endblock %} 

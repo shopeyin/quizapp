@@ -7,6 +7,7 @@ from .forms import TeacherSignUpForm,AddquizForm,SubjectForm
 
 
 def teacher_register(request):
+    context = {}
     if request.method == 'POST':
         form=TeacherSignUpForm(request.POST)
         if form.is_valid():
@@ -18,7 +19,8 @@ def teacher_register(request):
             return redirect('teacher:profile')
     else:
         form = TeacherSignUpForm()
-    return render(request, 'teacher/teacher_register.html',{'form': form}) 
+    context['form'] = form
+    return render(request, 'teacher/teacher_register.html',context) 
 
 
 
@@ -81,17 +83,15 @@ def view_subject_quiz(request,slug):
 
 
 
-def delete_quiz_view(request,slug):
-    context = {}
+def delete_quiz_view(request,slug): 
     quiz = get_object_or_404(Quiz,slug=slug)
-    if request.method == 'POST':
-        quiz.delete()
-        messages.success(request,f"{quiz} successfully deleted")
-        return redirect('teacher:view_quiz',slug=slug)
-    context['quiz'] = quiz
-    return render(request, 'teacher/delete_quiz.html',context) 
+    quiz.delete()
+    messages.success(request,f"{quiz} successfully deleted")
+    return redirect('teacher:profile')
+
 
     
+
 
 
     

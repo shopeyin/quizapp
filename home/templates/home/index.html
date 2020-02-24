@@ -16,25 +16,7 @@
 }
 </style>
 
-    <!-- <div class="jumbotron jumbotron-fluid">
-        <div class="container">
-          <h1 class="display-4">Welcome to The Quiz App</h1>
-          {% if request.user.is_authenticated %}
-                        {% if request.user.is_teacher %}
-                            <h3>Post your  questions</h3>
-                        {% else %} 
-                            <h3>Answer your  questions</h3>
-                        {% endif %}
-         {% else %}  
-         
-         <div class="row" style="border: 1px solid red;">
-            <div class="col-6 col-md-2"><a class="btn btn-primary lead" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a></div>
-            <div class="col-6 col-md-2"><a class="btn btn-primary lead" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a></div>
-        
-        </div>
-        
-        {% endif %}
-    </div> -->
+  
     <div class="container-fluid" style="background-color: #DDDDDD;min-height: 400px;" >
         <div class="row">
             <div class="col-sm-1 col-md-12" style="display: flex;justify-content: center;min-height: 150px;align-items: flex-end;font-family: 'Lemonada', cursive;">
@@ -60,7 +42,7 @@
                 <a class="btn btn-primary lead" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a>
             </div>
             <div class="col-6 col-md-2">
-                <a class="btn btn-primary lead" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a>
+                <a class="btn btn-primary lead" href="{% url 'teacher:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Teacher</a>
             </div>
         
         </div>
