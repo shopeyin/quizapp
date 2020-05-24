@@ -1,0 +1,144 @@
+body {
+  height: 100vh;
+  background-image: linear-gradient(
+    to right bottom,
+    rgba(232, 241, 230, 0.767),
+    rgba(234, 240, 238, 0.8)
+  );
+}
+
+@media (max-width: 575.98px) {
+  .container .row span {
+    font-size: 9px;
+  }
+
+  .btn-font {
+    font-size: 5px;
+  }
+}
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .container .row span {
+    font-size: 10px;
+  }
+  .btn-font {
+    font-size: 8px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .container .row span {
+    font-size: 19px;
+  }
+
+  .btn-font {
+    font-size: 10px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+}
+
+@media (min-width: 1200px) {
+}
+
+.home-container {
+  height: 100vh;
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(126, 213, 111, 0.767),
+      rgba(40, 180, 131, 0.8)
+    ),
+    url("{% static 'images/hero.jpg' %}");
+  background-size: cover;
+  background-position: top;
+  clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+.home-row {
+  color: #fff;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, 50%);
+  text-align: center;
+}
+.heading-primary {
+  color: #fff;
+  text-transform: uppercase;
+  backface-visibility: hidden;
+  margin-bottom: 5%;
+  text-align: center;
+}
+.heading-primary-main {
+  text-transform: uppercase;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  animation-name: moveInLeft;
+  animation-duration: 3s;
+  animation-timing-function: ease-out;
+}
+.heading-primary-sub {
+  text-transform: uppercase;
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 5px;
+}
+@keyframes moveInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  80% {
+    transform: translateX(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0);
+  }
+}
+
+.home-signup-btn {
+  text-align: center;
+  width: 100%;
+}
+
+.btn:link,
+.btn:visited {
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  margin: 5px;
+  display: inline-block;
+  border-radius: 100px;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #777;
+}
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.form-btn {
+  border-radius: 100px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.min-height {
+  min-height: 500px;
+}

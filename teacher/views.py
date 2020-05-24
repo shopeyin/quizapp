@@ -86,8 +86,16 @@ def view_subject_quiz(request,slug):
 def delete_quiz_view(request,slug): 
     quiz = get_object_or_404(Quiz,slug=slug)
     quiz.delete()
-    messages.success(request,f"{quiz} successfully deleted")
+    messages.success(request,f"{quiz} quiz successfully deleted")
     return redirect('teacher:profile')
+
+
+def delete_subject_view(request,slug): 
+    subject = get_object_or_404(Subject,slug=slug)
+    subject.delete()
+    messages.success(request,f"{subject} subject successfully deleted")
+    return redirect('teacher:profile')
+
 
 
     

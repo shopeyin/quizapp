@@ -5,13 +5,14 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-5">
             <h1>Answer Quiz</h1>
-            {% if messages %}
+          
 
+            {% if messages %} 
             <div class="messages">
                 {% for message in messages %}
-                <li style="width: 30%;" {% if message.tags %} class="p-2 mb-2 bg-success text-white {{ message.tags }} "{% endif %}>{{ message }}</li>
+                <p style="width: 100%;text-align: center;" {% if message.tags %} class="{{ message.tags }} p-3 mb-2 bg-success text-white "{% endif %}>{{ message }}</p>
                 {% endfor %}
             </div>
             {% endif %}

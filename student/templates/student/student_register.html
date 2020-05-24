@@ -1,62 +1,58 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-
-{% block content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
 <style>
-    .asteriskField{
-        color: red;
-    }
+  .asteriskField {
+    color: red;
+  }
+  
 </style>
 
-<div class="container-fluid">
-    <div class="row" style="min-height: 500px;display: flex; align-items: center;justify-content: center;background-color: #7FDBFF;">
-        <div class="col-md-6">
-            <form  class="form-reg" method="POST" >
-                {% csrf_token %}
-            <h3>Register as a Student</h3>
-                    {% for field in form %}
-                            {% for error in field.errors %}
-                            <p class="p-3 mb-2 bg-danger text-white"> {{ error }}</p>
-                            {% endfor %}
-                        {% endfor %}
-                
-                        {% if form.non_field_errors %}
-                        <div>
-                            <p class="p-3 mb-2 bg-danger text-white">{{ form.non_field_errors }}</p>
-                        </div>
-                    {% endif %}
-                <div class="row">
-                        <div class="col-md-6  form-label-group">
-                      
-                        {{ form.email|as_crispy_field }}  
-                        </div>
-                        <div class="col-md-6   form-label-group" >
-                            {{ form.username|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                         <div class="col-md-6  form-label-group">
-                            {{ form.password1|as_crispy_field }}
-                        </div>
-                        <div class="col-md-6  form-label-group">
-                            {{ form.password2|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12   form-label-group">
-                           
-                            {{ form.subject|as_crispy_field }}
-                        </div>
-                
-                    </div>
-            
-                    <button class="btn btn-lg btn-success" type="submit">Submit</button>
-        </form>
+<div class="container home-container">
+  <div class="row d-flex justify-content-center align-items-center min-height">
+    <div class="col-md-6">
+      <form class="form-reg" method="POST">
+        {% csrf_token %}
+        <h3>Register as a Student</h3>
+        {% for field in form %} {% for error in field.errors %}
+        <p class="p-3 mb-2 bg-danger text-white">{{ error }}</p>
+        {% endfor %} {% endfor %} {% if form.non_field_errors %}
+        <div>
+          <p class="p-3 mb-2 bg-danger text-white">
+            {{ form.non_field_errors }}
+          </p>
         </div>
-    </div>
-    
-   
-</div>
+        {% endif %}
+        <div class="row">
+          <div class="col-md-6 form-label-group">
+            {{ form.email|as_crispy_field }}
+          </div>
+          <div class="col-md-6 form-label-group">
+            {{ form.username|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6 form-label-group">
+            {{ form.password1|as_crispy_field }}
+          </div>
+          <div class="col-md-6 form-label-group">
+            {{ form.password2|as_crispy_field }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 form-label-group">
+            <span>{{ form.subject|as_crispy_field }}</span>
+          </div>
+        </div>
 
+        <button
+          href="#"
+          type="submit"
+          class="btn btn-success form-btn btn-white btn-animated"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

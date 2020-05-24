@@ -1,18 +1,31 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
-
-<div class="container" class="container" style="min-height: 500px;display: flex; align-items:center;justify-content: flex-start;background-color: rgb(202, 212, 209)";>
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Student Profile</h1>
-            <h3>Name of student:{{ request.user.username }} </h3>
-            <h3>List of Subjects taken by student:</h3>
-            {% for student_subject in student_subjects%}
-            <p>{{  student_subject }}  <a  class="btn btn-outline-primary" href="{% url 'student:view_quiz' student_subject.slug %}">View quiz</a> </p>
-            {% endfor %}
+<div class="container">
+  <div class="row min-height d-flex align-items-center">
+    <div class="col-md-7">
+      <div class="card">
+        <div class="card-header">
+          <h1>
+            Student Profile
+            <h3>Name of student:{{ request.user.username }}</h3>
+          </h1>
         </div>
+        <div class="card-body">
+          <h3>List of Subjects taken by student:</h3>
+          {% for student_subject in student_subjects%}
+          <p>
+            {{ student_subject }}
+            <a
+              class="btn btn-outline-primary"
+              href="{% url 'student:view_quiz' student_subject.slug %}"
+              >View quiz</a
+            >
+          </p>
+          {% endfor %}
+        </div>
+      </div>
     </div>
+  </div>
 </div>
 
 {% endblock %}

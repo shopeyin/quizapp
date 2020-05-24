@@ -1,66 +1,27 @@
-{% extends 'base.html' %}
-
-{% block content %}
-
-<style>
+{% extends 'base.html' %} {% load static %}{% block content %}
 
 
-@media (min-width: 320px) and (max-width: 480px) {
-  
-  h2{
-    font-size: 25px;
-  }
-  .lead{
-      font-size: 13px;
-  }
-}
-</style>
 
-  
-    <div class="container-fluid" style="background-color: #DDDDDD;min-height: 400px;" >
-        <div class="row">
-            <div class="col-sm-1 col-md-12" style="display: flex;justify-content: center;min-height: 150px;align-items: flex-end;font-family: 'Lemonada', cursive;">
-                <h1>Welcome to The Quiz App</h1>
-                
-            </div>
-
-        </div>
-        <div class="row">
-            <div class="col-sm-1 col-md-12" style="display: flex;justify-content: center;align-items: flex-start;">
-                {% if request.user.is_authenticated %}
-                    {% if request.user.is_teacher %}
-                        <h4>Post your  questions</h4>
-                    {% else %} 
-                        <h4>Answer your  questions</h4>
-                    {% endif %}
-                {% else %}  
-                
-            </div>
-        </div>
-        <div class="row" style="display: flex;justify-content: center; ">
-            <div class="col-6 col-md-2" style="display: flex;justify-content: flex-end;">
-                <a class="btn btn-primary lead" href="{% url 'student:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Student</a>
-            </div>
-            <div class="col-6 col-md-2">
-                <a class="btn btn-primary lead" href="{% url 'teacher:register' %}" tabindex="-1" aria-disabled="true">Sign Up as a Teacher</a>
-            </div>
-        
-        </div>
-         {% endif %}
+<div class="container home-container">
+  <div class="row home-row" style="text-align: center;">
+    <div class="col-12 col-md-12 heading-primary">
+      <span class="heading-primary-main"> Welcome to The Quiz App</span>
+      {% if request.user.is_authenticated %} {% if request.user.is_teacher %}
+      <span class="heading-primary-sub">Post your questions</span>
+      {% else %}
+      <span class="heading-primary-sub">Answer your questions</span>
     </div>
-    
-
-    
-
-    
-      <!-- Columns start at 50% wide on mobile and bump up to 33.3% wide on desktop -->
-   
-
-
-
-
-
-
-
+    {% endif %} {% else %}
+    <div class="home-signup-btn">
+      <a href="{% url 'student:register' %}" class="btn btn-white btn-animated"
+        >Sign Up as a Student</a
+      >
+      <a href="{% url 'teacher:register' %}" class="btn btn-white btn-animated"
+        >Sign Up as a Teacher</a
+      >
+    </div>
+    {% endif %}
+  </div>
+</div>
 
 {% endblock %}
